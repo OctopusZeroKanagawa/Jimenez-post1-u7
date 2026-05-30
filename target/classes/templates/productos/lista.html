@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Productos</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            padding: 2rem;
+            color: #333;
+        }
+
+        h1 {
+            color: #C62828;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .toolbar {
+            margin-bottom: 1rem;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background: white;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px 14px;
+            text-align: left;
+        }
+
+        th {
+            background: #C62828;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) { background: #fafafa; }
+        tr:hover          { background: #ffeaea; }
+
+        .btn {
+            padding: 6px 14px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            display: inline-block;
+        }
+
+        .btn-new    { background: #2E7D32; color: white; }
+        .btn-new:hover { background: #1B5E20; }
+
+        .btn-edit   { background: #E53935; color: white; margin-right: 6px; }
+        .btn-edit:hover { background: #B71C1C; }
+
+        .btn-del    { background: #C62828; color: white; }
+        .btn-del:hover  { background: #7F0000; }
+
+        .empty-msg {
+            text-align: center;
+            color: #888;
+            font-style: italic;
+            padding: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Gestión de Productos</h1>
+
+    <div class="toolbar">
+        <!-- th:href genera la URL relativa al contexto de la aplicación -->
+        <a th:href="@{/productos/nuevo}" class="btn btn-new">+ Nuevo Producto</a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--
+                th:each itera la lista "productos" del Model.
+                Cada iteración expone el objeto como variable "p".
+            -->
+            <tr th:each="p : ${productos}">
+                <td th:text="${p.id}"></td>
+                <td th:text="${p.nombre}"></td>
+                <td th:text="${p.descripcion}"></td>
+                <!-- #numbers.formatDecimal formatea el precio con 2 decimales -->
+                <td th:text="${'$' + #numbers.formatDecimal(p.precio, 1, 2)}"></td>
+                <td>
+                    <!-- URL con path variable: /productos/editar/1 -->
+                    <a th:href="@{/productos/editar/{id}(id=${p.id})}"
+                       class="btn btn-edit">Editar</a>
+
+                    <!-- Confirmación antes de eliminar -->
+                    <a th:href="@{/productos/eliminar/{id}(id=${p.id})}"
+                       class="btn btn-del"
+                       onclick="return confirm('¿Seguro que desea eliminar este producto?')">
+                        Eliminar
+                    </a>
+                </td>
+            </tr>
+
+            <!-- Mensaje alternativo si la lista está vacía -->
+            <tr th:if="${#lists.isEmpty(productos)}">
+                <td colspan="5" class="empty-msg">No hay productos registrados.</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
