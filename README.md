@@ -68,7 +68,7 @@ mvn -version
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/<tu-usuario>/apellido-post1-u7.git
+git clone https://github.com/OctopusZeroKanagawa/Jimenez-post1-u7
 cd apellido-post1-u7
 ```
 
@@ -168,5 +168,5 @@ Si el usuario pulsa **F5** sobre la lista, el navegador repite el GET (seguro), 
 
 ## Autor
 
-**[Andres Felipe Jimenez Ramírez]** — Ingeniería de Sistemas  
+**Andres Felipe Jimenez Ramírez** — Ingeniería de Sistemas  
 Universidad Francisco de Paula Santander · 2026
